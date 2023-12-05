@@ -9,20 +9,30 @@ router.get("/api/categories",(req,res)=>{
 
 router.post("/api/categories",(req,res)=>{
     const {name} = req.body;
-    const category = new Cat({name});
-    category.save()
-    .then((result)=>res.send("biba"))
-    .catch((error)=>console.log(error));
+    if(name.length <=24 && name.length>0){
+        const category = new Cat({name});
+        category.save()
+        .then((result)=>res.sendStatus(200))
+        .catch((error)=>console.log(error));
+    }
+    else{
+        res.sendStatus(400);
+    }
+
 });
 router.put("/api/categories/:id",(req,res)=>{
     const{name}=req.body;
-    Cat.findByIdAndUpdate(req.params.id,{name})
-    .then((result)=>res.send("biba"))
-    .catch((error)=>console.log(error));
+    if(name.length <=24 && name.length>0){
+        Cat.findByIdAndUpdate(req.params.id,{name})
+        .then((result)=>res.sendStatus(200))
+        .catch((error)=>console.log(error));
+    }else{
+        res.sendStatus(400);
+    }
 });
 router.delete("/api/categories/:id",(req,res)=>{
     Cat.findByIdAndDelete(req.params.id)
-    .then((result)=>res.send("biba"))
+    .then((result)=>res.sendStatus(200))
     .catch((error)=>console.log(error));
 });
 

@@ -12,20 +12,30 @@ router.get("/api/sales/details/:id",(req,res)=>{
 });
 router.post("/api/sales",(req,res)=>{
     const {amount,carPartId,pricePerPiece,totalPrice} = req.body;
-    const sale = new Sale({amount,carPartId,pricePerPiece,totalPrice});
-    sale.save()
-        .then((result)=>res.send("biba"))
-        .catch((error)=>console.log(error));
+    if(amount>0 && pricePerPiece>0 && totalPrice>0){
+        const sale = new Sale({amount,carPartId,pricePerPiece,totalPrice});
+        sale.save()
+            .then((result)=>res.sendStatus(200))
+            .catch((error)=>console.log(error));
+    }else{
+        res.sendStatus(400);
+    }
+
 });
 router.put("/api/sales/:id",(req,res)=>{
-    const {amount,carPartId,pricePerPiece,totalPrice} = req.body;
-    Sale.findByIdAndUpdate(req.params.id,{amount,carPartId,pricePerPiece,totalPrice})
-        .then((result)=>res.send("biba"))
-        .catch((error)=>console.log(error));
+    if(amount>0 && pricePerPiece>0 && totalPrice>0){
+        const {amount,carPartId,pricePerPiece,totalPrice} = req.body;
+        Sale.findByIdAndUpdate(req.params.id,{amount,carPartId,pricePerPiece,totalPrice})
+            .then((result)=>res.sendStatus(200))
+            .catch((error)=>console.log(error));
+    }else{
+        res.sendStatus(400);
+    }
+    
 });
 router.delete("/api/sales/:id",(req,res)=>{
     Sale.findByIdAndDelete(req.params.id)
-        .then((result)=>res.send("biba"))
+        .then((result)=>res.sendStatus(200))
         .catch((error)=>console.log(error));
 });
 
