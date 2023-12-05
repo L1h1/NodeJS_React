@@ -17,7 +17,7 @@ class SalesForm extends React.Component {
           amountValid:false,
           ttpValid:false
         };
-
+        this.state.token = sessionStorage.getItem("accessToken");
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onAmountChange = this.onAmountChange.bind(this);
         this.onProdIdChange = this.onProdIdChange.bind(this);
@@ -53,8 +53,11 @@ class SalesForm extends React.Component {
         e.preventDefault();
         if(this.validator.amountValid && this.validator.ppcValid,this.validator.ttpValid,this.validator.prodValid){
           const url = '/api/sales';
-          axios.post(url,this.state)
-          .then(()=>console.log('created product'));
+          axios.post(url,this.state,{headers:{
+            'authorization':this.state.token
+        }})
+          .then(()=>console.log('created product'))
+          .catch((error)=>alert('permission denied'));;
           window.history.back();
         }
     }

@@ -23,7 +23,7 @@ class Navbar extends React.Component{
             </ul>
             </div>
 
-            <Button text='Login' link='/login'/>
+            <Button text='Login' link='/identity/login'/>
         </nav>;
     }
 }

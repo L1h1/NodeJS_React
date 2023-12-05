@@ -11,7 +11,7 @@ import CategoryForm from './components/forms/category';
 import ProductForm from './components/forms/product';
 import FabricatorForm from './components/forms/fabricator';
 import SalesForm from './components/forms/sale';
-
+import LoginForm from './components/forms/login';
 function App() {
 
   return (
@@ -31,6 +31,7 @@ function App() {
             <Route path="/fabricators/create" element={<FabricatorForm/>}></Route>
             <Route path="/sales" element={<Sales/>}></Route>
             <Route path="/sales/create" element={<SalesForm/>}></Route>
+            <Route path="/identity/login" element={<LoginForm/>}></Route>
         </Routes>
     </div>
     </>

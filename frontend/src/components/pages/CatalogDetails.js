@@ -8,6 +8,7 @@ function CatalogDetails() {
     const {productId} = useParams();
     const [data, setData] = useState({});
     const url = `/api/goods/details/${productId}`;
+    const token = sessionStorage.getItem("accessToken");
     const fetchInfo = () => { 
       return axios.get(url) 
               .then((res) => setData(res.data)) 
@@ -29,10 +30,11 @@ function CatalogDetails() {
     </div>
     <div className={style.flexR} style={{justifyContent:'space-between'}}>
     <div className={style.flexR}>
-    <Button text='Edit' link={`/catalog/details/edit/${data._id}`}/>
+      {token?<Button text='Edit' link={`/catalog/details/edit/${data._id}`}/>:''}
+
     <Button text='Back' link={`/catalog/categorized/${data.categoryId}`}/>
     </div>
-    <Button text='Delete' link={`/catalog/categorized/${data.categoryId}`} clickfunc={deleter}/>
+    {token?<Button text='Delete' link={`/catalog/categorized/${data.categoryId}`} clickfunc={deleter}/>:''}
     </div>
     </div>
 

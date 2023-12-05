@@ -44,7 +44,7 @@ class ProductForm extends React.Component {
           categoryValid:false,
           fabricatorValid:false
         };
-
+        this.state.token = sessionStorage.getItem("accessToken");
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onNameChange = this.onNameChange.bind(this);
         this.onArticleChange = this.onArticleChange.bind(this);
@@ -102,13 +102,19 @@ class ProductForm extends React.Component {
           && this.validator.priceValid && this.validator.categoryValid && this.validator.fabricatorValid){
           if(this.state.isEditMode){
             const url = `/api/goods/${this.state.isEditMode}`;
-            axios.put(url,this.state)
-            .then(()=>console.log('created product'));
+            axios.put(url,this.state,{headers:{
+              'authorization':this.state.token
+          }})
+            .then(()=>console.log('created product'))
+            .catch((error)=>alert('permission denied'));;
             window.history.back();
           }else{
             const url = '/api/goods';
-            axios.post(url,this.state)
-            .then(()=>console.log('created product'));
+            axios.post(url,this.state,{headers:{
+              'authorization':this.state.token
+          }})
+            .then(()=>console.log('created product'))
+            .catch((error)=>alert('permission denied'));;
             window.history.back();
           }
         }

@@ -13,7 +13,7 @@ function Catalog() {
     return axios.get(url) 
             .then((res) => setData(res.data)) 
     }
-    
+    const token = sessionStorage.getItem("accessToken");
     useEffect(() => {
       fetchInfo().then(()=>setSearchResults(data)).then(()=>setSortMode(true));
 
@@ -59,7 +59,8 @@ function Catalog() {
         <input type='text' className={uiStyle.btn} onChange={onSearchChange}/>
         <Button text='Order by name' clickfunc={orderByName}/>
       </div>
-    <Button text='Create' link='/catalog/create'/>
+      {token?<Button text='Create' link='/catalog/create'/>:''}
+      
     </div>
     <div className={style.flexC} style={{margin:'20px'}}>
       {

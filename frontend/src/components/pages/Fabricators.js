@@ -11,7 +11,7 @@ function Fabricators() {
   const [searchResults, setSearchResults] = useState([{}]);
   const [nameSortMode,setNameSortMode] = useState();
   const url = `/api/fabricators`;
-
+  const token = sessionStorage.getItem("accessToken");
 
 
   const fetchInfo = () => { 
@@ -66,7 +66,8 @@ function Fabricators() {
         <input type='text' className={uiStyle.btn} onChange={onSearchChange}/>
         <Button text='Order by name' clickfunc={orderByName}/>
       </div>
-      <Button text='Create' link='/fabricators/create'/>
+      {token?      <Button text='Create' link='/fabricators/create'/>:''}
+
     </div>
     <div className={style.flexR} style={{justifyContent:'space-between',margin:'20px', alignItems:'start'}}> 
       <div className={style.flexC} style={{margin:'0px'}}>
@@ -79,8 +80,8 @@ function Fabricators() {
                       <p>Address: {obj.address}</p>
                       <p>Phone: {obj.phone}</p>
                       <div className={style.flexC}>
-                        <Button text='Edit' link={`/fabricators/edit/${obj._id}`}/>
-                        <Button text='Delete' link='/fabricators/#' clickfunc={()=>deleter(obj._id)}/>
+                        {token?(<><Button text='Edit' link={`/fabricators/edit/${obj._id}`}/><Button text='Delete' link='/fabricators/#' clickfunc={()=>deleter(obj._id)}/></>):''}
+                        
                       </div>
                   </div>
                   

@@ -40,7 +40,7 @@ class FabricatorForm extends React.Component {
         this.onNameChange = this.onNameChange.bind(this);
         this.onAddressChange = this.onAddressChange.bind(this);
         this.onPhoneChange = this.onPhoneChange.bind(this);
-
+        this.state.token = sessionStorage.getItem("accessToken");
         this.validator = {
           nameValid:false,
           addressValid:false,
@@ -85,13 +85,19 @@ class FabricatorForm extends React.Component {
         if(this.validator.nameValid && this.validator.addressValid && this.validator.phoneValid){
           if(this.state.isEditMode){
             const url = `/api/fabricators/${this.state.isEditMode}`;
-            axios.put(url,this.state)
-            .then(()=>console.log('created product'));
+            axios.put(url,this.state,{headers:{
+              'authorization':this.state.token
+          }})
+            .then(()=>console.log('created product'))
+            .catch((error)=>alert('permission denied'));
             window.history.back();
           }else{
             const url = '/api/fabricators';
-            axios.post(url,this.state)
-            .then(()=>console.log('created product'));
+            axios.post(url,this.state,{headers:{
+              'authorization':this.state.token
+          }})
+            .then(()=>console.log('created product'))
+            .catch((error)=>alert('permission denied'));;
             window.history.back();
           }
         }

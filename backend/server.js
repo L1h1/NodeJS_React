@@ -1,11 +1,15 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
+
 
 const saleRouter = require("./routes/sale");
 const categoryRouter = require("./routes/category");
 const fabricatorRouter = require("./routes/fabricator");
 const carpartRouter = require("./routes/part");
 const CategoryModel = require('./models/category');
+const UserModel = require('./models/user');
+const identityRouter = require('./routes/identity');
 
 const PORT = 5000;
 const app = express();
@@ -16,6 +20,9 @@ app.use(saleRouter);
 app.use(categoryRouter);
 app.use(fabricatorRouter);
 app.use(carpartRouter);
+app.use(identityRouter);
+
+
 
 
 app.get("/api",(req,res)=>{

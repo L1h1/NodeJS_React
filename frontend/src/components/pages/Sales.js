@@ -11,7 +11,7 @@ function Sales() {
   const [priceSortMode,setPriceSortMode] = useState();
   const [totalSortMode,setTotalSortMode] = useState();
   const [dateSortMode,setDateSortMode] = useState();
-
+  const token = sessionStorage.getItem("accessToken");
   const url = 'api/sales';
 
   const fetchInfo = () => { 
@@ -129,7 +129,7 @@ function Sales() {
         <Button text='Order by total price' clickfunc={orderByTotalPrice}/>
         <Button text='Order by date' clickfunc={orderByDate}/>
       </div>
-    <Button text='Create' link='/sales/create'/>
+    {token?<Button text='Create' link='/sales/create'/>:''}
       </div>
       <table style={{ border: '2px solid white', borderCollapse: 'collapse'}}>
       <thead>

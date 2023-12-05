@@ -12,7 +12,7 @@ function CatalogCategorized() {
   const [articleSortMode,setArticleSortMode] = useState();
   const [priceSortMode,setPriceSortMode] = useState();
   const url = `/api/goods/${categoryId}`;
-
+  const token = sessionStorage.getItem("accessToken");
 
   const fetchInfo = () => { 
     return axios.get(url) 
@@ -104,7 +104,7 @@ function CatalogCategorized() {
         <Button text='Order by name' clickfunc={orderByName}/>
         <Button text='Order by price' clickfunc={orderByPrice}/>
       </div>
-      <Button text='Create' link='/catalog/create-product'/>
+      {token?<Button text='Create' link='/catalog/create-product'/>:''}
     </div>
    <div className={style.flexC} style={{margin:'20px',width:'40%'}}>
    {

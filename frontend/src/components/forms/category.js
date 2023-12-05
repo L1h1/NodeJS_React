@@ -10,6 +10,8 @@ class CategoryForm extends React.Component {
         this.state = {};
         this.validator={};  
 
+        this.state.token = sessionStorage.getItem("accessToken");
+
         this.state.name='nothing here';
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onNameChange = this.onNameChange.bind(this);
@@ -23,10 +25,15 @@ class CategoryForm extends React.Component {
 
     handleSubmit(e){
         e.preventDefault();
-        if(this.state.nameValid){
+
+        if(this.validator.nameValid){
             const url = '/api/categories';
-            axios.post(url,{name:this.state.name})
-            .then(()=>console.log('created category'));
+
+            axios.post(url,{name:this.state.name},{headers:{
+                'authorization':this.state.token
+            }})
+            .then(()=>console.log('created category'))
+            .catch((error)=>alert('permission denied'));
             window.history.back();
         }
     }
