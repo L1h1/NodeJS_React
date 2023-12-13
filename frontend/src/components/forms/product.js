@@ -110,6 +110,7 @@ class ProductForm extends React.Component {
             window.history.back();
           }else{
             const url = '/api/goods';
+            delete this.state._id;
             axios.post(url,this.state,{headers:{
               'authorization':this.state.token
           }})

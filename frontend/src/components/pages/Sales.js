@@ -20,10 +20,14 @@ function Sales() {
     }
     
     useEffect(() => {
-      fetchInfo().then(()=>setSearchResults(data)).then(()=>setAmountSortMode(true))
+      fetchInfo().then(()=>setAmountSortMode(true))
       .then(()=>setPriceSortMode(true)).then(()=>setTotalSortMode(true)).then(()=>setDateSortMode(true));
     }, [])
 
+    useEffect(() => {
+      setSearchResults(data);
+
+    }, [data])
     function onSearchChange(e){
       var val = e.target.value;
 
@@ -143,29 +147,31 @@ function Sales() {
         </tr>
       </thead>
       <tbody>
-        {searchResults.map((row, rowIndex) => (
-          <tr>
-            <td style={{ border: '2px solid white', padding: '8px' }}>
-              {row._id}
-            </td>
-            <td style={{ border: '2px solid white', padding: '8px' }}>
-              {row.carPartId}
-            </td>
-            <td style={{ border: '2px solid white', padding: '8px' }}>
-              {row.pricePerPiece}
-            </td>
-            <td style={{ border: '2px solid white', padding: '8px' }}>
-              {row.amount}
-            </td>
-            <td style={{ border: '2px solid white', padding: '8px' }}>
-              {row.totalPrice}
-            </td>
-            <td style={{ border: '2px solid white', padding: '8px' }}>
-              {row.createdAt}
-            </td>
-            
-          </tr>
-        ))}
+        {searchResults.map((row, rowIndex) => {
+          return row._id?(
+            <tr>
+              <td style={{ border: '2px solid white', padding: '8px' }}>
+                {row._id}
+              </td>
+              <td style={{ border: '2px solid white', padding: '8px' }}>
+                {row.carPartId}
+              </td>
+              <td style={{ border: '2px solid white', padding: '8px' }}>
+                {row.pricePerPiece}
+              </td>
+              <td style={{ border: '2px solid white', padding: '8px' }}>
+                {row.amount}
+              </td>
+              <td style={{ border: '2px solid white', padding: '8px' }}>
+                {row.totalPrice}
+              </td>
+              <td style={{ border: '2px solid white', padding: '8px' }}>
+                {row.createdAt}
+              </td>
+              
+            </tr>
+          ):''
+        })}
       </tbody>
     </table>
 

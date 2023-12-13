@@ -15,9 +15,14 @@ function Catalog() {
     }
     const token = sessionStorage.getItem("accessToken");
     useEffect(() => {
-      fetchInfo().then(()=>setSearchResults(data)).then(()=>setSortMode(true));
+      fetchInfo().then(()=>setSortMode(true));
 
     }, [])
+    useEffect(() => {
+      setSearchResults(data);
+
+    }, [data])
+
   
     function onSearchChange(e){
       var val = e.target.value;
@@ -50,6 +55,7 @@ function Catalog() {
     }
 
 
+
   return (
     <>
 
@@ -65,9 +71,9 @@ function Catalog() {
     <div className={style.flexC} style={{margin:'20px'}}>
       {
         searchResults.map((obj,index)=>{
-          return(
+          return obj.name?(
             <Button text={obj.name} link={`/catalog/categorized/${obj._id}`}/>
-          )
+          ):''
         })
       }
     </div>

@@ -20,10 +20,15 @@ function CatalogCategorized() {
     }
     
     useEffect(() => {
-      fetchInfo().then(()=>setSearchResults(data))
+      fetchInfo()
       .then(()=>setArticleSortMode(true)).then(()=>setNameSortMode(true))
       .then(()=>setPriceSortMode(true));
     }, [])
+
+    useEffect(() => {
+      setSearchResults(data);
+
+    }, [data])
   
     function onSearchChange(e){
       var val = e.target.value;
@@ -109,12 +114,12 @@ function CatalogCategorized() {
    <div className={style.flexC} style={{margin:'20px',width:'40%'}}>
    {
      searchResults.map((obj,index)=>{
-       return(
+       return obj.article?(
          <div className={style.flexR} style={{width:'50%',justifyContent:'space-between'}}>
              <p class={style.borderedContainer}>Article:{obj.article} Name:{obj.name} Price:{obj.price}</p>
              <Button text='Details' link={`/catalog/details/${obj._id}`}/>
          </div>
-       )
+       ):''
      })
      
    }

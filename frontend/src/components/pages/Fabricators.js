@@ -9,6 +9,7 @@ import uiStyle from '../ui/button.module.css'
 function Fabricators() {
   const [data, setData] = useState([{}]);
   const [searchResults, setSearchResults] = useState([{}]);
+
   const [nameSortMode,setNameSortMode] = useState();
   const url = `/api/fabricators`;
   const token = sessionStorage.getItem("accessToken");
@@ -20,11 +21,18 @@ function Fabricators() {
     }
     
     useEffect(() => {
-      fetchInfo().then(()=>setNameSortMode(true)).then(()=>setSearchResults(data));
+      fetchInfo().then(()=>setNameSortMode(true));
     }, [])
 
+    useEffect(() => {
+      setSearchResults(data);
+
+    }, [data])
+
     function deleter(dataId){
-      axios.delete(`/api/fabricators/${dataId}`);
+      axios.delete(`/api/fabricators/${dataId}`,{headers:{
+        'authorization':token
+    }});
     }
     
     function onSearchChange(e){
@@ -72,8 +80,9 @@ function Fabricators() {
     <div className={style.flexR} style={{justifyContent:'space-between',margin:'20px', alignItems:'start'}}> 
       <div className={style.flexC} style={{margin:'0px'}}>
         {
+          
             searchResults.map((obj,index)=>{
-              return(
+              return obj.name?(
                 <div className={style.borderedContainer} >
                   <div className={style.flexR} style={{justifyContent:'space-between'}}>
                       <p>Name: {obj.name}</p>
@@ -86,7 +95,7 @@ function Fabricators() {
                   </div>
                   
                 </div>
-              )
+              ):''
             })
         }
         

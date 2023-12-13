@@ -4,6 +4,7 @@ const Part = require('../models/carpart');
 const router = Router();
 
 router.get("/api/goods/:categoryId",(req,res)=>{
+
     Part.find({categoryId:req.params.categoryId}).then((data)=>res.send(data))
     .catch((error)=>console.log(error));
 });
@@ -26,6 +27,7 @@ router.post("/api/goods",auth,(req,res)=>{
 
 });
 router.put("/api/goods/:id",auth,(req,res)=>{
+
     const {article,name,price,categoryId,fabricatorId} = req.body;
     if(name.length<=64 && name.length>0 && article.length<=32 && article.length>0
         && price>0){
@@ -37,6 +39,7 @@ router.put("/api/goods/:id",auth,(req,res)=>{
         }
 });
 router.delete("/api/goods/:id",auth,(req,res)=>{
+    console.log('deleting');
     Part.findByIdAndDelete(req.params.id)
     .then((result)=>res.sendStatus(200))
     .catch((error)=>console.log(error));

@@ -18,8 +18,10 @@ function CatalogDetails() {
         fetchInfo();
       }, [])
 
-      function deleter(){
-        axios.delete(`/api/goods/${data._id}`);
+      function deleter(id){
+        axios.delete(`/api/goods/${id}`,{headers:{
+          'authorization':token
+      }});
       }
 
 
@@ -34,7 +36,7 @@ function CatalogDetails() {
 
     <Button text='Back' link={`/catalog/categorized/${data.categoryId}`}/>
     </div>
-    {token?<Button text='Delete' link={`/catalog/categorized/${data.categoryId}`} clickfunc={deleter}/>:''}
+    {token?<Button text='Delete' link={`/catalog/categorized/${data.categoryId}`} clickfunc={()=>deleter(data._id)}/>:''}
     </div>
     </div>
 
